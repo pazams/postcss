@@ -6,16 +6,16 @@
 
 PostCSS is a tool for transforming CSS with JS plugins.
 These plugins can support variables and mixins, transpile future CSS syntax,
-inline images, and more.
+inline images, and more.
 
-Google, Twitter, Alibaba, and Shopify uses PostCSS.
-Its plugin, [Autoprefixer], is one of the most popular CSS processors.
+PostCSS is used by industry leaders including Google, Twitter, Alibaba,
+and Shopify. The [Autoprefixer] PostCSS plugin is one of the most popular
+CSS processors.
 
 PostCSS can do the same work as preprocessors like Sass, Less, and Stylus.
 But PostCSS is modular, 3-30 times faster, and much more powerful.
 
 Twitter account: [@postcss](https://twitter.com/postcss).
-Weibo account:   [postcss](http://weibo.com/postcss).
 VK.com page:     [postcss](https://vk.com/postcss).
 
 [chat-img]: https://img.shields.io/badge/Gitter-Join_the_PostCSS_chat-brightgreen.svg
@@ -23,7 +23,7 @@ VK.com page:     [postcss](https://vk.com/postcss).
 [chat]:     https://gitter.im/postcss/postcss
 [ci]:       https://travis-ci.org/postcss/postcss
 
-[Examples](#what-is-postcss) | [Features](#features) | [Usage](#usage) | [Plugins](#plugins) | [Write Own Plugin](#how-to-develop-postcss-plugin) | [Options](#options)
+[Examples](#what-is-postcss) | [Features](#features) | [Usage](#usage) | [Plugins](#plugins) | [Write Your Own Plugin](#how-to-develop-a-postcss-plugin) | [Options](#options)
 --- | --- | --- | --- | --- | ---
 
 <a href="https://evilmartians.com/?utm_source=postcss">
@@ -60,8 +60,7 @@ You can use the [cssnext] plugin pack and write future CSS code right now:
 }
 ```
 
-Or if you like the Sass syntax, you could combine
-[`postcss-nested`] and [`postcss-mixins`]:
+Or if you like the Sass syntax, you could use [PreCSS] plugin pack:
 
 ```css
 @define-mixin social-icon $network $color {
@@ -82,11 +81,13 @@ Or if you like the Sass syntax, you could combine
 ```
 
 [cssnext]: http://cssnext.io/
+[PreCSS]:  https://github.com/jonathantneal/precss
 
 ## Features
 
 Preprocessors are template languages, where you mix styles with code
 (like PHP does with HTML).
+
 In contrast, in PostCSS you write a custom subset of CSS.
 All code can only be in JS plugins.
 
@@ -99,13 +100,13 @@ As a result, PostCSS offers three main benefits:
   transpiles the latest W3C drafts to current CSS syntax.
 * **New abilities:** PostCSS plugins can read and change every part of CSS.
   It makes many new classes of tools possible. [Autoprefixer], [`rtlcss`],
-  [`doiuse`] or [`postcss-colorblind`] are good examples.
+  [`doiuse`] or [`postcss-colorblind`] are good examples.
 
 [3 times faster]: https://github.com/postcss/benchmark
 
 ## Usage
 
-You just need to follow these two steps to use PostCSS:
+Start using PostCSS in just two steps:
 
 1. Add PostCSS to your build tool.
 2. Select plugins from the list below and add them to your PostCSS process.
@@ -134,7 +135,7 @@ postcss([ require('cssnext')(), require('cssnano')() ])
     });
 ```
 
-You can also use PostCSS plugins with the Stylus by using [`poststylus`].
+You can also use PostCSS plugins with Stylus by using [`poststylus`].
 
 Read the [PostCSS API] for more details about the JS API.
 
@@ -152,10 +153,9 @@ Read the [PostCSS API] for more details about the JS API.
 
 ### Control
 
-There is two way to make PostCSS magic more explicit.
+There are two ways to make PostCSS magic more explicit.
 
-Define a plugins contexts and switch between them in different parts of CSS
-by [`postcss-plugin-context`]:
+Limit a plugin's local stylesheet context using [`postcss-plugin-context`]:
 
 ```css
 .css-example.is-test-for-css4-browsers {
@@ -168,7 +168,7 @@ by [`postcss-plugin-context`]:
 }
 ```
 
-Or to enable plugins right in CSS by [`postcss-use`]:
+Or enable plugins directly in CSS using [`postcss-use`]:
 
 ```css
 @use autoprefixer(browsers: ['last 2 versions']);
@@ -187,10 +187,16 @@ Or to enable plugins right in CSS by [`postcss-use`]:
   to special annotation comments.
 * [`cssnano`] contains plugins that optimize CSS size for use in production.
 * [`cssnext`] contains plugins that allow you to use future CSS features today.
+* [`precss`] contains plugins that allow you to use Sass-like CSS.
+* [`rucksack`] contains plugins to speed up CSS development with new features and shortcuts.
+* [`stylelint`] contains plugins that lint your stylesheets.
 
-[`cssnano`]:  https://github.com/ben-eb/cssnano
-[`cssnext`]:  http://cssnext.io/
-[`atcss`]:    https://github.com/morishitter/atcss
+[`stylelint`]: https://github.com/stylelint/stylelint
+[`rucksack`]:  https://github.com/simplaio/rucksack
+[`cssnano`]:   https://github.com/ben-eb/cssnano
+[`cssnext`]:   http://cssnext.io/
+[`precss`]:    https://github.com/jonathantneal/precss
+[`atcss`]:     https://github.com/morishitter/atcss
 
 ### Future CSS Syntax
 
@@ -200,8 +206,6 @@ Or to enable plugins right in CSS by [`postcss-use`]:
 * [`postcss-color-hwb`] transforms `hwb()` to widely compatible `rgb()`.
 * [`postcss-color-rebeccapurple`] supports the `rebeccapurple` color.
 * [`postcss-conic-gradient`] supports the `conic-gradient` background.
-* [`postcss-css-variables`] supports variables for nested rules,
-  selectors, and at-rules
 * [`postcss-custom-media`] supports custom aliases for media queries.
 * [`postcss-custom-properties`] supports variables, using syntax from
   the W3C Custom Properties.
@@ -221,8 +225,6 @@ See also [`cssnext`] plugins pack to add future CSS syntax by one line of code.
 
 * [`postcss-color-rgba-fallback`] transforms `rgba()` to hexadecimal.
 * [`postcss-epub`] adds the `-epub-` prefix to relevant properties.
-* [`postcss-image-set`] adds `background-image` with first image
-  for `image-set()`.
 * [`postcss-opacity`] adds opacity filter for IE8.
 * [`postcss-pseudoelements`] Convert `::` selectors into `:` selectors
   for IE 8 compatibility.
@@ -237,25 +239,31 @@ See also [`cssnext`] plugins pack to add future CSS syntax by one line of code.
 
 * [`postcss-bem`] adds at-rules for BEM and SUIT style classes.
 * [`postcss-conditionals`] adds `@if` statements.
+* [`postcss-css-variables`] supports variables for selectors, and at-rules
+  using W3C similar syntax.
 * [`postcss-define-property`] to define properties shortcut.
 * [`postcss-each`] adds `@each` statement.
 * [`postcss-for`] adds `@for` loops.
+* [`postcss-local-constants`] adds support for localized constants.
 * [`postcss-map`] enables configuration maps.
-* [`postcss-mixins`] enables mixins more powerful than Sass’s,
+* [`postcss-mixins`] enables mixins more powerful than Sass',
   defined within stylesheets or in JS.
 * [`postcss-media-variables`] adds support for `var()` and `calc()`
   in `@media` rules
 * [`postcss-modular-scale`] adds a modular scale `ms()` function.
 * [`postcss-nested`] unwraps nested rules.
+* [`postcss-nested-props`] unwraps nested properties.
 * [`postcss-pseudo-class-enter`] transforms `:enter` into `:hover` and `:focus`.
 * [`postcss-quantity-queries`] enables quantity queries.
 * [`postcss-simple-extend`] supports extending of silent classes,
-  like Sass’s `@extend`.
+  like Sass’ `@extend`.
 * [`postcss-simple-vars`] supports for Sass-style variables.
 * [`postcss-strip-units`] strips units off of property values.
 * [`postcss-vertical-rhythm`] adds a vertical rhythm unit
   based on `font-size` and `line-height`.
 * [`csstyle`] adds components workflow to your styles.
+
+See also [`precss`] plugins pack to add them by one line of code.
 
 ### Colors
 
@@ -263,13 +271,34 @@ See also [`cssnext`] plugins pack to add future CSS syntax by one line of code.
   in the `brand-colors` module.
 * [`postcss-color-alpha`] transforms `#hex.a`, `black(alpha)` and `white(alpha)`
   to `rgba()`.
-* [`postcss-color-hcl`] transforms `hcl(H, C, L)` and `HCL(H, C, L, alpha)`
+* [`postcss-color-hcl`] transforms `hcl(H, C, L)` and `hcl(H, C, L, alpha)`
   to `#rgb` and `rgba()`.
+* [`postcss-color-hexa`] transforms `hexa(hex, alpha)` into `rgba` format.
 * [`postcss-color-mix`] mixes two colors together.
 * [`postcss-color-palette`] transforms CSS 2 color keywords to a custom palette.
 * [`postcss-color-pantone`] transforms pantone color to RGB.
 * [`postcss-color-scale`] adds a color scale `cs()` function.
+* [`postcss-colorblind`] transforms colors using filters to simulate
+  colorblindness.
 * [`postcss-hexrgba`] adds shorthand hex `rgba(hex, alpha)` method.
+
+### Images and Fonts
+
+* [`postcss-assets`] allows you to simplify URLs, insert image dimensions,
+  and inline files.
+* [`postcss-at2x`] handles retina background images via use of `at-2x` keyword.
+* [`postcss-data-packer`] moves embedded Base64 data to a separate file.
+* [`postcss-image-set`] adds `background-image` with first image
+  for `image-set()`.
+* [`postcss-font-pack`] simplifies font declarations and validates they match
+  configured font packs.
+* [`postcss-fontpath`] adds font links for different browsers.
+* [`postcss-sprites`] generates CSS sprites from stylesheets.
+* [`postcss-svg`] insert inline SVG to CSS and allows to manage it colors.
+* [`postcss-svg-fallback`] converts SVG in your CSS to PNG files for IE 8.
+* [`postcss-svgo`] processes inline SVG through [SVGO].
+* [`postcss-url`] rebases or inlines `url()`s.
+* [`webpcss`] adds URLs for WebP images for browsers that support WebP.
 
 ### Grids
 
@@ -279,27 +308,23 @@ See also [`cssnext`] plugins pack to add future CSS syntax by one line of code.
 
 ### Optimizations
 
-* [`postcss-assets`] allows you to simplify URLs, insert image dimensions,
-  and inline files.
-* [`postcss-at2x`] handles retina background images via use of `at-2x` keyword.
 * [`postcss-calc`] reduces `calc()` to values
   (when expressions involve the same units).
-* [`postcss-data-packer`] moves embedded Base64 data to a separate file.
 * [`postcss-import`] inlines the stylesheets referred to by `@import` rules.
 * [`postcss-single-charset`] ensures that there is one and only one
   `@charset` rule at the top of file.
-* [`postcss-sprites`] generates CSS sprites from stylesheets.
-* [`postcss-url`] rebases or inlines `url()`s.
 * [`postcss-zindex`] rebases positive `z-index` values.
 * [`css-byebye`] removes the CSS rules that you don’t want.
 * [`css-mqpacker`] joins matching CSS media queries into a single statement.
-* [`webpcss`] adds URLs for WebP images for browsers that support WebP.
+* [`stylehacks`] removes CSS hacks based on browser support.
 
 See also plugins in modular minifier [`cssnano`].
 
+[SVGO]: https://github.com/svg/svgo
+
 ### Shortcuts
 
-* [`postcss-alias`] to create shorter aliases for properties.
+* [`postcss-alias`] creates shorter aliases for properties.
 * [`postcss-border`] adds shorthand for width and color of all borders
   in `border` property.
 * [`postcss-clearfix`] adds `fix` and `fix-legacy` properties to the `clear`
@@ -308,7 +333,6 @@ See also plugins in modular minifier [`cssnano`].
 * [`postcss-easings`] replaces easing names from easings.net
   with `cubic-bezier()` functions.
 * [`postcss-focus`] adds `:focus` selector to every `:hover`.
-* [`postcss-fontpath`] adds font links for different browsers.
 * [`postcss-generate-preset`] allows quick generation of rules.
   Useful for creating repetitive utilities.
 * [`postcss-position`] adds shorthand declarations for position attributes.
@@ -317,22 +341,22 @@ See also plugins in modular minifier [`cssnano`].
 * [`postcss-short`] adds and extends numerous shorthand properties.
 * [`postcss-size`] adds a `size` shortcut that sets width and height
   with one declaration.
+* [`postcss-transform-shortcut`] allows shorthand transform properties in CSS.
 * [`postcss-verthorz`] adds vertical and horizontal spacing declarations.
 
 ### Others
 
 * [`postcss-class-prefix`] adds a prefix/namespace to class selectors.
-* [`postcss-colorblind`] transforms colors using filters to simulate
-  colorblindness.
 * [`postcss-fakeid`] transforms `#foo` IDs to attribute selectors `[id="foo"]`.
 * [`postcss-flexboxfixer`] unprefixes `-webkit-` only flexbox in legacy CSS.
 * [`postcss-gradientfixer`] unprefixes `-webkit-` only gradients in legacy CSS.
-* [`postcss-log-warnings`] logs warnings messages from other plugins
-  in the console.
-* [`postcss-messages`] displays warning messages from other plugins
-  right in your browser.
+* [`postcss-mq-keyframes`] moves any animation keyframes in media queries
+  to the end of the file.
+* [`postcss-pseudo-elements-content`] automatically adds `content: ""`
+  to `:before` and `:after`.
 * [`postcss-pxtorem`] converts pixel units to `rem`.
 * [`postcss-style-guide`] generates a style guide automatically.
+* [`perfectionist`] formats poorly written CSS and renders a “pretty” result.
 * [`rtlcss`] mirrors styles for right-to-left locales.
 
 ### Analysis
@@ -345,6 +369,13 @@ See also plugins in modular minifier [`cssnano`].
 * [`list-selectors`] lists and categorizes the selectors used in your CSS,
   for code review.
 
+### Reporters
+
+* [`postcss-browser-reporter`] displays warning messages from other plugins
+  right in your browser.
+* [`postcss-reporter`] logs warnings and other messages from other plugins
+  in the console.
+
 ### Fun
 
 * [`postcss-australian-stylesheets`] Australian Style Sheets.
@@ -352,6 +383,7 @@ See also plugins in modular minifier [`cssnano`].
 * [`postcss-pointer`] Replaces `pointer: cursor` with `cursor: pointer`.
 * [`postcss-spiffing`] lets you use British English in your CSS.
 
+[`postcss-pseudo-elements-content`]:https://github.com/omgovich/postcss-pseudo-elements-content
 [`postcss-australian-stylesheets`]: https://github.com/dp-lewis/postcss-australian-stylesheets
 [`postcss-pseudo-class-any-link`]:  https://github.com/jonathantneal/postcss-pseudo-class-any-link
 [`postcss-canadian-stylesheets`]:   https://github.com/chancancode/postcss-canadian-stylesheets
@@ -360,18 +392,21 @@ See also plugins in modular minifier [`cssnano`].
 [`postcss-discard-duplicates`]:     https://github.com/ben-eb/postcss-discard-duplicates
 [`postcss-minify-font-weight`]:     https://github.com/ben-eb/postcss-minify-font-weight
 [`postcss-pseudo-class-enter`]:     https://github.com/jonathantneal/postcss-pseudo-class-enter
+[`postcss-transform-shortcut`]:     https://github.com/jonathantneal/postcss-transform-shortcut
 [`postcss-custom-properties`]:      https://github.com/postcss/postcss-custom-properties
 [`postcss-discard-font-face`]:      https://github.com/ben-eb/postcss-discard-font-face
 [`postcss-custom-selectors`]:       https://github.com/postcss/postcss-custom-selectors
 [`postcss-discard-comments`]:       https://github.com/ben-eb/postcss-discard-comments
 [`postcss-minify-selectors`]:       https://github.com/ben-eb/postcss-minify-selectors
 [`postcss-quantity-queries`]:       https://github.com/pascalduez/postcss-quantity-queries
+[`postcss-browser-reporter`]:       https://github.com/postcss/postcss-browser-reporter
 [`postcss-color-hex-alpha`]:        https://github.com/postcss/postcss-color-hex-alpha
 [`postcss-define-property`]:        https://github.com/daleeidd/postcss-define-property
 [`postcss-generate-preset`]:        https://github.com/simonsmith/postcss-generate-preset
 [`postcss-media-variables`]:        https://github.com/WolfgangKluge/postcss-media-variables
 [`postcss-property-lookup`]:        https://github.com/simonsmith/postcss-property-lookup
 [`postcss-vertical-rhythm`]:        https://github.com/markgoodyear/postcss-vertical-rhythm
+[`postcss-local-constants`]:        https://github.com/macropodhq/postcss-local-constants
 [`postcss-color-function`]:         https://github.com/postcss/postcss-color-function
 [`postcss-conic-gradient`]:         https://github.com/jonathantneal/postcss-conic-gradient
 [`postcss-convert-values`]:         https://github.com/ben-eb/postcss-convert-values
@@ -386,6 +421,7 @@ See also plugins in modular minifier [`cssnano`].
 [`postcss-normalize-url`]:          https://github.com/ben-eb/postcss-normalize-url
 [`postcss-reduce-idents`]:          https://github.com/ben-eb/postcss-reduce-idents
 [`postcss-simple-extend`]:          https://github.com/davidtheclark/postcss-simple-extend
+[`postcss-mq-keyframes`]:           https://github.com/TCotton/postcss-mq-keyframes
 [`postcss-brand-colors`]:           https://github.com/postcss/postcss-brand-colors
 [`postcss-class-prefix`]:           https://github.com/thompsongl/postcss-class-prefix
 [`postcss-conditionals`]:           https://github.com/andyjansson/postcss-conditionals
@@ -393,10 +429,11 @@ See also plugins in modular minifier [`cssnano`].
 [`postcss-default-unit`]:           https://github.com/antyakushev/postcss-default-unit
 [`postcss-flexboxfixer`]:           https://github.com/hallvors/postcss-flexboxfixer
 [`postcss-font-variant`]:           https://github.com/postcss/postcss-font-variant
-[`postcss-log-warnings`]:           https://github.com/davidtheclark/postcss-log-warnings
 [`postcss-media-minmax`]:           https://github.com/postcss/postcss-media-minmax
 [`postcss-merge-idents`]:           https://github.com/ben-eb/postcss-merge-idents
 [`postcss-selector-not`]:           https://github.com/postcss/postcss-selector-not
+[`postcss-svg-fallback`]:           https://github.com/justim/postcss-svg-fallback
+[`postcss-nested-props`]:           https://github.com/jedmao/postcss-nested-props
 [`postcss-color-alpha`]:            https://github.com/avanes/postcss-color-alpha
 [`postcss-color-scale`]:            https://github.com/kristoferjoseph/postcss-color-scale
 [`postcss-data-packer`]:            https://github.com/Ser-Gen/postcss-data-packer
@@ -409,6 +446,8 @@ See also plugins in modular minifier [`cssnano`].
 [`postcss-bem-linter`]:             https://github.com/necolas/postcss-bem-linter
 [`postcss-color-gray`]:             https://github.com/postcss/postcss-color-gray
 [`postcss-colorblind`]:             https://github.com/btholt/postcss-colorblind
+[`postcss-color-hexa`]:             https://github.com/nicksheffield/postcss-color-hexa
+[`postcss-font-pack`]:              https://github.com/jedmao/postcss-font-pack
 [`postcss-color-hcl`]:              https://github.com/devgru/postcss-color-hcl
 [`postcss-color-hwb`]:              https://github.com/postcss/postcss-color-hwb
 [`postcss-color-mix`]:              https://github.com/iamstarkov/postcss-color-mix
@@ -416,12 +455,12 @@ See also plugins in modular minifier [`cssnano`].
 [`postcss-clearfix`]:               https://github.com/seaneking/postcss-clearfix
 [`postcss-colormin`]:               https://github.com/ben-eb/colormin
 [`postcss-cssstats`]:               https://github.com/cssstats/postcss-cssstats
-[`postcss-messages`]:               https://github.com/postcss/postcss-messages
 [`postcss-position`]:               https://github.com/seaneking/postcss-position
 [`postcss-spiffing`]:               https://github.com/HashanP/postcss-spiffing
 [`postcss-verthorz`]:               https://github.com/davidhemphill/postcss-verthorz
 [`pleeease-filters`]:               https://github.com/iamvdo/pleeease-filters
 [`postcss-fontpath`]:               https://github.com/seaneking/postcss-fontpath
+[`postcss-reporter`]:               https://github.com/postcss/postcss-reporter
 [`postcss-easings`]:                https://github.com/postcss/postcss-easings
 [`postcss-hexrgba`]:                https://github.com/seaneking/postcss-hexrgba
 [`postcss-opacity`]:                https://github.com/iamvdo/postcss-opacity
@@ -441,6 +480,7 @@ See also plugins in modular minifier [`cssnano`].
 [`css2modernizr`]:                  https://github.com/vovanbo/css2modernizr
 [`postcss-short`]:                  https://github.com/jonathantneal/postcss-short
 [`postcss-alias`]:                  https://github.com/seaneking/postcss-alias
+[`perfectionist`]:                  https://github.com/ben-eb/perfectionist
 [`postcss-at2x`]:                   https://github.com/simonsmith/postcss-at2x
 [`postcss-calc`]:                   https://github.com/postcss/postcss-calc
 [`postcss-each`]:                   https://github.com/outpunk/postcss-each
@@ -449,14 +489,17 @@ See also plugins in modular minifier [`cssnano`].
 [`postcss-host`]:                   https://github.com/vitkarpov/postcss-host
 [`postcss-neat`]:                   https://github.com/jo-asakura/postcss-neat
 [`postcss-size`]:                   https://github.com/postcss/postcss-size
+[`postcss-svgo`]:                   https://github.com/ben-eb/postcss-svgo
 [`postcss-vmin`]:                   https://github.com/iamvdo/postcss-vmin
 [`autoprefixer`]:                   https://github.com/postcss/autoprefixer
 [`css-mqpacker`]:                   https://github.com/hail2u/node-css-mqpacker
 [`postcss-bem`]:                    https://github.com/ileri/postcss-bem
 [`postcss-for`]:                    https://github.com/antyakushev/postcss-for
 [`postcss-map`]:                    https://github.com/pascalduez/postcss-map
+[`postcss-svg`]:                    https://github.com/Pavliko/postcss-svg
 [`postcss-url`]:                    https://github.com/postcss/postcss-url
 [`css-byebye`]:                     https://github.com/AoDev/css-byebye
+[`stylehacks`]:                     https://github.com/ben-eb/stylehacks
 [`cssgrace`]:                       https://github.com/cssdream/cssgrace
 [`csstyle`]:                        https://github.com/geddski/csstyle
 [`webpcss`]:                        https://github.com/lexich/webpcss
@@ -465,7 +508,7 @@ See also plugins in modular minifier [`cssnano`].
 [`rtlcss`]:                         https://github.com/MohammadYounes/rtlcss
 [`lost`]:                           https://github.com/corysimmons/lost
 
-## How to Develop PostCSS Plugin
+## How to Develop a PostCSS Plugin
 
 * [Plugin Guidelines](https://github.com/postcss/postcss/blob/master/docs/guidelines/plugin.md)
 * [Plugin Boilerplate](https://github.com/postcss/postcss-plugin-boilerplate)
@@ -481,11 +524,11 @@ from previous transformation steps, autodetect the format that you expect,
 and output both external and inline maps.
 
 To ensure that you generate an accurate source map, you must indicate the input
-and output CSS files paths — using the options `from` and `to`, respectively.
+and output CSS file paths — using the options `from` and `to`, respectively.
 
 To generate a new source map with the default options, simply set `map: true`.
 This will generate an inline source map that contains the source content.
-If you don’t want the map inlined, you can use set `map.inline: false`.
+If you don’t want the map inlined, you can set `map.inline: false`.
 
 ```js
 processor
@@ -524,18 +567,18 @@ option as an object with the following parameters:
   with `prev: false`.
 
 * `sourcesContent` boolean: indicates that PostCSS should set the origin
-  content (for example, Sass source) of the source map. By default, it’s `true`.
-  But if all previous maps do not contain sources content, PostCSS will also
-  leave it out even if you do not set this option.
+  content (for example, Sass source) of the source map. By default,
+  it is `true`. But if all previous maps do not contain sources content,
+  PostCSS will also leave it out even if you do not set this option.
 
 * `annotation` boolean or string: indicates that PostCSS should add annotation
   comments to the CSS. By default, PostCSS will always add a comment with a path
-  to the source map. But if the input CSS does not have any annotation
-  comment, PostCSS will omit it, too, even if you do not set this option.
+  to the source map. PostCSS will not add annotations to CSS files that
+  do not contain any comments.
 
   By default, PostCSS presumes that you want to save the source map as
   `opts.to + '.map'` and will use this path in the annotation comment.
-  But you can set another path by providing a string value for `annotation`.
+  A different path can be set by providing a string value for `annotation`.
 
   If you have set `inline: true`, annotation cannot be disabled.
 
@@ -543,7 +586,7 @@ option as an object with the following parameters:
 
 ### Safe Mode
 
-If you provide a `safe: true` option to the `process` or `parse` methods,
+If you pass the `safe: true` option to the `process` or `parse` methods,
 PostCSS will try to correct any syntax errors that it finds in the CSS.
 
 ```js
